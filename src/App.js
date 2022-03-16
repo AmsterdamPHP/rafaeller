@@ -1,22 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import JoinCode from "./components/Code"
+import Participants from "./components/Participants";
+import React, { useState } from 'react';
 
 function App() {
+  const [participants] = useState([])
+  const code = Math.floor(1000 + Math.random() * 9000);
+  const url = "http://example.org/join"
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <JoinCode code={code} url={url} />
+        <img
+          className="banner"
+          src={process.env.PUBLIC_URL + "amsterdamphp-raffler-logo.png"}
+          alt="AmsterdamPHP raffler 2.0"
+        />
+        <Participants participants={participants} />
       </header>
     </div>
   );
