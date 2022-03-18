@@ -2,6 +2,7 @@ import "./App.css";
 import JoinCode from "./components/Code"
 import Participants from "./components/Participants";
 import React, { useState } from 'react';
+import WebSocket from "ws";
 
 function App() {
   const [participants] = useState([])
