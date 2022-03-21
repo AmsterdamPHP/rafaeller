@@ -40,3 +40,13 @@
     transform: rotate(360deg);
   }
 }
+
+form input, form button {
+  font-size: calc(10px + 2vmin);
+  padding: 5px 10px;
+}
+
+span.loader {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: calc(5px + 2vmin);
+}

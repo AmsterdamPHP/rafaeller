@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Loading from "./Loading";
 
 export default function Participants(props) {
   const participants = props.participants.map((participant) =>
@@ -10,7 +11,7 @@ export default function Participants(props) {
   );
   return (
     participants.length === 0
-      ? <p>No-one here yet :(</p>
+      ? <Loading message="no-one here yet... :(" />
       : <ul className="participants">{participants}</ul>
   );
 }
