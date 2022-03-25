@@ -1,0 +1,20 @@
+version: '3.7'
+networks:
+  raffler:
+    driver: bridge
+services:
+  server:
+    image: synon/raffle-server
+    container_name: raffle-server
+    networks:
+      - raffler
+  client:
+    image: node:16-alpine
+    container_name: raffle-client
+    volumes:
+      - ./:/var/www
+    entrypoint: npm start
+    ports:
+      - '8081:8080'
+    networks:
+      - raffler
