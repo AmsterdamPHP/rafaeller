@@ -31,8 +31,8 @@ function App() {
     setHostKey("")
   }
 
-  const addPlayer = username => {
-    setPlayers([...players, {"username": username, "imageUrl": "example.org/avi.jpg"}])
+  const addPlayer = player => {
+    setPlayers([...players, player])
   }
 
   ws.onmessage = msg => handleMessage(msg.data, addPlayer)
@@ -59,11 +59,11 @@ function App() {
           src={process.env.PUBLIC_URL + "amsterdamphp-raffler-logo.png"}
           alt="AmsterdamPHP raffler 2.0"
         />
-        {
-          connected && joinCode &&
-            <Players players={players} />
-        }
       </header>
+      {
+        connected && joinCode &&
+          <Players players={players} />
+      }
     </div>
   );
 }
