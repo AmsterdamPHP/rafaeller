@@ -28,7 +28,7 @@ export default function Players(props) {
 
 Players.propTypes = {
   players: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string.isRequired
+    username: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired
   })).isRequired
 }

@@ -8,5 +8,5 @@ export default function JoinCode(props) {
 
 JoinCode.propTypes = {
   url: PropTypes.string.isRequired,
-  code: PropTypes.number.isRequired,
+  code: PropTypes.string.isRequired,
 }

@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function Avatar(props)
 {
   return(
@@ -6,4 +8,8 @@ export default function Avatar(props)
         dangerouslySetInnerHTML={{__html: props.svg}}
       />
     )
+}
+
+Avatar.propTypes = {
+  svg: PropTypes.string.isRequired
 }

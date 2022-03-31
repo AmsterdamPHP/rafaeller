@@ -1,9 +1,11 @@
+import PropTypes from "prop-types";
+
 export default function HostKey(props) {
 
   const {value, onChange, onSubmit, error} = props
   return (
     <form
-      id="adminKey"
+      id="hostKey"
       onSubmit={onSubmit}
     >
       { error &&
@@ -21,4 +23,11 @@ export default function HostKey(props) {
       </span>
     </form>
   )
+}
+
+HostKey.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  error: PropTypes.string.isRequired,
 }
