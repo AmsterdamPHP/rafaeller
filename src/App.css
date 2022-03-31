@@ -148,3 +148,7 @@ div.join-container {
   padding: 50px 0;
   width: 45%;
 }
+
+span.playerJoined svg {
+  width: 40%;
+}

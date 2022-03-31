@@ -17,8 +17,6 @@ export default function Players(props) {
   }
   );
 
-  props.players.map(player => console.log(player.avatar))
-
   return (
     players.length === 0
       ? <Loading message="no-one here yet... :(" />
