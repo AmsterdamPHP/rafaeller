@@ -92,10 +92,16 @@ form#playerJoin input {
   margin: 20px 0;
 }
 
+form#hostKey {
+  display: flex;
+  flex-direction: column;
+}
+
 form span.error {
   color:#f2382c;
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-  font-size: calc(5px + 2vmin);
+  font-size: calc(5px + 1vmin);
+  margin-bottom: 10px;
 }
 
 .inputStyle {

@@ -1,10 +1,11 @@
 import Player from "./classes/Player";
 
-const handleHostMessage = (msg, addPlayer, handleError = () => console.error(msg)) => {
+const handleHostMessage = (msg, addPlayer, removePlayer, setJoinCode, handleError = () => console.error(msg)) => {
   const data = JSON.parse(msg)
 
   if (data.error) {
     handleError(data.error)
+    return
   }
 
   switch (data.message) {
