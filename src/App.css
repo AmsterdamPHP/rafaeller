@@ -26,7 +26,7 @@
 
 .banner {
   margin: 50px 0;
-  width: 80%;
+  width: 100%;
 }
 
 .App-link {
@@ -43,8 +43,68 @@
 }
 
 form input, form button {
-  font-size: calc(10px + 2vmin);
+  font-size: calc(6px + 2vmin);
   padding: 5px 10px;
+}
+
+form input {
+  margin-right:10px;
+}
+
+form input.blackUnderlined {
+  color: #ffffff;
+  background: black;
+  border: none;
+  border-bottom: 1px solid white;
+  font-style: italic;
+}
+
+form input.blackUnderlined:focus {
+  outline: none;
+}
+
+form button {
+  border-radius: 0;
+  box-shadow: none;
+  color: #000;
+  background: #f2382c;
+  border: none;
+  text-transform:uppercase;
+}
+
+form button:active, form button:hover {
+  background: #bb2a21;
+}
+
+form button:disabled {
+  opacity: 0.6;
+  background: #f2382c;
+}
+
+form#playerJoin {
+  height:70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+form#playerJoin input {
+  margin: 20px 0;
+}
+
+form span.error {
+  color:#f2382c;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: calc(5px + 2vmin);
+}
+
+.inputStyle {
+  width: 3rem !important;
+  height: 3rem;
+  margin: 0 1rem;
+  font-size: 2rem;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 span.loader {
@@ -76,4 +136,9 @@ ul.players span.player-name {
 
 div.avatar {
   width: inherit;
+}
+
+div.join-container {
+  padding: 50px 0;
+  width: 45%;
 }

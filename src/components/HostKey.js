@@ -7,6 +7,7 @@ export default function HostKey(props) {
       onSubmit={onSubmit}
     >
       <input
+        className="blackUnderlined"
         type="password"
         placeholder="Enter host key"
         value={value}
