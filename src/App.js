@@ -10,7 +10,7 @@ import Host from "./components/Host";
 function App() {
   console.log(process.env.PUBLIC_URL)
   return (
-    <Router>
+    <Router basename={`${process.env.PUBLIC_URL}/`}>
       <div className="App">
         <Routes>
           <Route path="/" element={<Host />} />
