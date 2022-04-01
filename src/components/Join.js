@@ -5,8 +5,7 @@ import {handlePlayerMessage} from "../MessageHandler";
 import Banner from "./Banner";
 import Avatar from "./Avatar";
 
-const wsUrl = process.env.NODE_ENV === "development" ? "ws://localhost:8000" : "wss://raffle-server.herokuapp.com"
-const ws = new WebSocket(wsUrl)
+const ws = new WebSocket("wss://raffle-server.herokuapp.com")
 
 const Join = (props) => {
   const [error, setError] = useState(false)

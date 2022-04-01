@@ -6,8 +6,7 @@ import React, {useState} from "react";
 import { handleHostMessage } from "../MessageHandler";
 import Banner from "./Banner";
 
-const wsUrl = process.env.NODE_ENV === "development" ? "ws://localhost:8000" : "wss://raffle-server.herokuapp.com"
-const ws = new WebSocket(wsUrl)
+const ws = new WebSocket("wss://raffle-server.herokuapp.com")
 
 const Host = () => {
   const [error, setError] = useState("")
