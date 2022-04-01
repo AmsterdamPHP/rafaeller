@@ -8,6 +8,7 @@ import {
 import Host from "./components/Host";
 
 function App() {
+  console.log(process.env.PUBLIC_URL)
   return (
     <Router>
       <div className="App">

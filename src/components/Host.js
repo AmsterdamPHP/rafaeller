@@ -58,7 +58,7 @@ const Host = () => {
           />
           : connected
             ? <JoinCode
-              url="http://example.org/join"
+              url={`${process.env.PUBLIC_URL}/join`}
               code={joinCode}
             />
             : <Loading message="not connected to raffle server..." />
