@@ -20,7 +20,7 @@ const Host = () => {
   const onHostKeySubmit = e => {
     e.preventDefault()
     setError("")
-    const code = Math.floor(1000 + Math.random() * 9000)
+    const code = Math.floor(Math.random() * 9999).toString().padStart(4, '0')
 
     conn.send(JSON.stringify({
       "message": "registerHost",
