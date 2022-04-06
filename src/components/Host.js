@@ -5,8 +5,10 @@ import Players from "./Players";
 import React, {useState} from "react";
 import { handleHostMessage } from "../MessageHandler";
 import Banner from "./Banner";
+import * as ws from "../util/ws-util";
 
-const ws = new WebSocket("wss://raffle-server.herokuapp.com")
+const conn = ws.connect()
+ws.keepAlive(ws)
 
 const Host = () => {
   const [error, setError] = useState("")
@@ -20,7 +22,7 @@ const Host = () => {
     setError("")
     const code = Math.floor(1000 + Math.random() * 9000)
 
-    ws.send(JSON.stringify({
+    conn.send(JSON.stringify({
       "message": "registerHost",
       "hostKey": hostKey,
       "joinCode": code,
@@ -29,10 +31,10 @@ const Host = () => {
     setHostKey("")
   }
 
-  ws.onopen = () => setConnected(true)
-  ws.onclose = () => setConnected(false)
+  conn.onopen = () => setConnected(true)
+  conn.onclose = () => setConnected(false)
   const onChange = e => setHostKey(e.target.value)
-  ws.onmessage = msg => handleHostMessage(msg.data, addPlayer, removePlayer, setJoinCode, setError)
+  conn.onmessage = msg => handleHostMessage(msg.data, addPlayer, removePlayer, setJoinCode, setError)
 
   const addPlayer = player => {
     setPlayers([...players, player])

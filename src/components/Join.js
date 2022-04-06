@@ -4,8 +4,10 @@ import OtpInput from "react-otp-input";
 import {handlePlayerMessage} from "../MessageHandler";
 import Banner from "./Banner";
 import Avatar from "./Avatar";
+import * as ws from "../util/ws-util"
 
-const ws = new WebSocket("wss://raffle-server.herokuapp.com")
+const conn = ws.connect()
+ws.keepAlive(ws)
 
 const Join = (props) => {
   const [error, setError] = useState(false)
@@ -14,12 +16,12 @@ const Join = (props) => {
   const [joinCode, setJoinCode] = useState("")
   const [player, setPlayer] = useState()
 
-  ws.onopen = () => setConnected(true)
-  ws.onclose = () => {
+  conn.onopen = () => setConnected(true)
+  conn.onclose = () => {
     setConnected(false)
     setPlayer(null)
   }
-  ws.onmessage = (msg) => {
+  conn.onmessage = (msg) => {
     handlePlayerMessage(msg.data, setPlayer, setError)
   }
 
@@ -31,7 +33,7 @@ const Join = (props) => {
   const onSubmit = (e) => {
     setError(false)
     e.preventDefault()
-    ws.send(JSON.stringify({
+    conn.send(JSON.stringify({
       "message": "registerPlayer",
       "username": username,
       "joinCode": joinCode,
