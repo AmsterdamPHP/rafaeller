@@ -1,5 +1,4 @@
-const wsUrl = 'wss://raffle-server.herokuapp.com'
-
+const wsUrl = process.env.NODE_ENV === 'development' ?  'ws://localhost:8080' : 'wss://raffle-server.herokuapp.com'
 const connect = () => {
   return new WebSocket(wsUrl)
 }
@@ -8,9 +7,13 @@ const connect = () => {
  * Ping the WebSocket server every so often to avoid the connection closing by timeout.
  */
 const keepAlive = (ws, seconds = 25) => {
-  while (ws.readyState === WebSocket.OPEN) {
-    setTimeout(ws.send('ping'), seconds * 1000)
-  }
+  const interval = window.setInterval(() => {
+    if (ws.readyState !== ws.OPEN) {
+      window.clearInterval(interval)
+    }
+
+    ws.send('ping')
+  }, seconds * 1000 )
 }
 
 export {connect, keepAlive}

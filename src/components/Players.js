@@ -6,12 +6,8 @@ import DOMPurify from "dompurify";
 
 export default function Players(props) {
   const players = props.players.map(function (player) {
-    const svg = DOMPurify.sanitize(player.avatar, {
-      USE_PROFILES: { svg: true },
-    });
-
     return (<li key={player.username}>
-      <Avatar svg={svg} />
+      <Avatar svg={player.avatar} />
       <span className="player-name">{player.username}</span>
     </li>)
   }
