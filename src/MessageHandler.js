@@ -1,6 +1,13 @@
 import Player from "./classes/Player";
 
-const handleHostMessage = (msg, addPlayer, removePlayer, setJoinCode, handleError = () => console.error(msg)) => {
+const handleHostMessage = (
+    msg,
+    addPlayer,
+    removePlayer,
+    setJoinCode,
+    setWinner,
+    handleError = () => console.error(msg)
+  ) => {
   if (msg === 'pong') return
   const data = JSON.parse(msg)
 
@@ -18,6 +25,10 @@ const handleHostMessage = (msg, addPlayer, removePlayer, setJoinCode, handleErro
       break
     case "playerLeft":
       removePlayer(data.username)
+      break
+    case "winner":
+      const winner = new Player(data.username)
+      setWinner(winner)
       break
     default:
       throw new Error('Unexpected incoming message: ' + msg)
