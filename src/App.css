@@ -24,6 +24,25 @@
   margin-top:15%;
 }
 
+.App-header svg {
+  width:40%;
+}
+
+.host-instruction {
+  position: absolute;
+  top: 20px;
+  text-align: center;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: calc(7px + 1vmin);
+  z-index: 100;
+}
+
+span.winner-text {
+  position:relative;
+  top:10px;
+  font-size:calc(5px + 2vmin);
+}
+
 .banner {
   margin: 50px 0;
   width: 100%;
