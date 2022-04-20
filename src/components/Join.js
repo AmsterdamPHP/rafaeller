@@ -7,7 +7,7 @@ import Avatar from "./Avatar";
 import * as ws from "../util/ws-util"
 
 const conn = ws.connect()
-ws.keepAlive(ws)
+ws.keepAlive(conn)
 
 const Join = (props) => {
   const [error, setError] = useState(false)
