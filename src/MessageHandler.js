@@ -35,12 +35,17 @@ const handleHostMessage = (
   }
 }
 
-const handlePlayerMessage = (msg, setPlayer, handleError = () => console.error(msg)) => {
+const handlePlayerMessage = (msg, setPlayer, setResult, handleError = () => console.error(msg)) => {
   if (msg === 'pong') return
   const data = JSON.parse(msg)
 
   if (data.error) {
     handleError(data.error)
+  }
+
+  if (data.message === "You won!" || data.message ===  "Better luck next time...") {
+    window.setTimeout(() => setResult(data.message), 8000)
+    return
   }
 
   switch (data.message) {

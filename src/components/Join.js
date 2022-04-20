@@ -1,3 +1,4 @@
+import React from "react";
 import {useState} from "react";
 import Loading from "./Loading";
 import OtpInput from "react-otp-input";
@@ -11,6 +12,7 @@ const Join = (props) => {
   const [username, setUsername] = useState("")
   const [joinCode, setJoinCode] = useState("")
   const [player, setPlayer] = useState()
+  const [result, setResult] = useState(false)
 
   ws.onclose = () => {
     setConnected(false)
@@ -18,7 +20,7 @@ const Join = (props) => {
   }
 
   ws.onmessage = (msg) => {
-    handlePlayerMessage(msg.data, setPlayer, setError)
+    handlePlayerMessage(msg.data, setPlayer, setResult, setError)
   }
 
   const onUsernameChange = (e) => setUsername(e.target.value)
@@ -35,6 +37,12 @@ const Join = (props) => {
       "joinCode": joinCode,
     }))
   }
+
+  React.useEffect(() => {
+    if (result !== false) {
+      window.setTimeout(() => setResult(false), 5000)
+    }
+  }, [result])
 
   return (
     <div className="join-container">
@@ -69,11 +77,14 @@ const Join = (props) => {
         </button>
       </form>
       }
-      {connected && player &&
+      {connected && player && !result &&
         <span className="playerJoined">
           <Avatar svg={player.avatar} />
           <p>You've joined the raffle as {username}! 🎉</p>
         </span>
+      }
+      {connected && player && result &&
+        <p>{result}</p>
       }
       {!connected &&
         <Loading message="not connected to raffle server..." />
