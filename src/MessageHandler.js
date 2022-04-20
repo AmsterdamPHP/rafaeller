@@ -1,6 +1,7 @@
 import Player from "./classes/Player";
 
 const handleHostMessage = (msg, addPlayer, removePlayer, setJoinCode, handleError = () => console.error(msg)) => {
+  if (msg === 'pong') return
   const data = JSON.parse(msg)
 
   if (data.error) {
@@ -24,6 +25,7 @@ const handleHostMessage = (msg, addPlayer, removePlayer, setJoinCode, handleErro
 }
 
 const handlePlayerMessage = (msg, setPlayer, handleError = () => console.error(msg)) => {
+  if (msg === 'pong') return
   const data = JSON.parse(msg)
 
   if (data.error) {
