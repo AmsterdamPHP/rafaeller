@@ -4,24 +4,20 @@ import OtpInput from "react-otp-input";
 import {handlePlayerMessage} from "../MessageHandler";
 import Banner from "./Banner";
 import Avatar from "./Avatar";
-import * as ws from "../util/ws-util"
-
-const conn = ws.connect()
-ws.keepAlive(conn)
 
 const Join = (props) => {
+  const {ws, connected, setConnected} = props
   const [error, setError] = useState(false)
-  const [connected, setConnected] = useState(false)
   const [username, setUsername] = useState("")
   const [joinCode, setJoinCode] = useState("")
   const [player, setPlayer] = useState()
 
-  conn.onopen = () => setConnected(true)
-  conn.onclose = () => {
+  ws.onclose = () => {
     setConnected(false)
     setPlayer(null)
   }
-  conn.onmessage = (msg) => {
+
+  ws.onmessage = (msg) => {
     handlePlayerMessage(msg.data, setPlayer, setError)
   }
 
@@ -33,7 +29,7 @@ const Join = (props) => {
   const onSubmit = (e) => {
     setError(false)
     e.preventDefault()
-    conn.send(JSON.stringify({
+    ws.send(JSON.stringify({
       "message": "registerPlayer",
       "username": username,
       "joinCode": joinCode,

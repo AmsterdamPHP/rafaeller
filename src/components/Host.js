@@ -5,17 +5,15 @@ import Players from "./Players";
 import React, {useState} from "react";
 import { handleHostMessage } from "../MessageHandler";
 import Banner from "./Banner";
-import * as ws from "../util/ws-util";
 import HostInstruction from "./HostInstruction";
 import PickingWinner from "./PickingWinner";
 import Winner from "./Winner";
 
-const conn = ws.connect()
+const Host = (props) => {
+  const {ws, connected} = props
 
-const Host = () => {
   const [error, setError] = useState("")
   const [hostKey, setHostKey] = useState("")
-  const [connected, setConnected] = useState(false)
   const [joinCode, setJoinCode] = useState(false)
   const [players, setPlayers] = useState([])
   const [pickingWinner, setPickingWinner] = useState(false)
@@ -23,7 +21,7 @@ const Host = () => {
 
   document.body.onkeyup = function(e) {
     if (shouldPickWinner(e, players.length, pickingWinner)) {
-      conn.send(JSON.stringify({"message": "pickWinner"}))
+      ws.send(JSON.stringify({"message": "pickWinner"}))
       setPickingWinner(true)
     }
   }
@@ -33,7 +31,7 @@ const Host = () => {
     setError("")
     const code = Math.floor(Math.random() * 9999).toString().padStart(4, '0')
 
-    conn.send(JSON.stringify({
+    ws.send(JSON.stringify({
       "message": "registerHost",
       "hostKey": hostKey,
       "joinCode": code,
@@ -42,13 +40,8 @@ const Host = () => {
     setHostKey("")
   }
 
-  conn.onopen = () => {
-    ws.keepAlive(conn)
-    setConnected(true)
-  }
-  conn.onclose = () => setConnected(false)
   const onChange = e => setHostKey(e.target.value)
-  conn.onmessage = msg => handleHostMessage(msg.data, addPlayer, removePlayer, setJoinCode, setWinner, setError)
+  ws.onmessage = msg => handleHostMessage(msg.data, addPlayer, removePlayer, setJoinCode, setWinner, setError)
 
   const addPlayer = player => {
     setPlayers([...players, player])
