@@ -6,7 +6,8 @@ const winnerSound = new Audio(process.env.PUBLIC_URL + '/item-get.mp3')
 const Winner = (props) => {
   const { winner } = props
   winnerSound.currentTime = 8
-  winnerSound.play()
+
+  React.useEffect(() => winnerSound.play(),[])
   return (
     <React.Fragment>
       <Avatar className="winner" svg={winner.avatar} />
