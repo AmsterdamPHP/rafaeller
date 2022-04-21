@@ -24,10 +24,6 @@
   margin-top:15%;
 }
 
-.App-header svg {
-  width:40%;
-}
-
 .host-instruction {
   position: absolute;
   top: 20px;
@@ -164,8 +160,12 @@ div.avatar {
 }
 
 div.join-container {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:90%;
   padding: 50px 0;
-  width: 45%;
 }
 
 span.playerJoined svg {
