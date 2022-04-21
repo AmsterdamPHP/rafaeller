@@ -12,10 +12,12 @@ const Join = (props) => {
     get: (searchParams, prop) => searchParams.get(prop),
   });
 
+  const code = typeof params.code !== 'undefined'  && params.code !== null ? params.code : ''
+
   const {ws, connected, setConnected} = props
   const [error, setError] = useState(false)
   const [username, setUsername] = useState("")
-  const [joinCode, setJoinCode] = useState(params.code)
+  const [joinCode, setJoinCode] = useState(code)
   const [player, setPlayer] = useState()
   const [result, setResult] = useState(false)
 
