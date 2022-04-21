@@ -1,4 +1,4 @@
-const wsUrl = process.env.NODE_ENV === 'development' ?  'ws://localhost:8080' : 'wss://raffle-server.herokuapp.com'
+const wsUrl = 'wss://raffle-server.herokuapp.com'
 const connect = () => {
   return new WebSocket(wsUrl)
 }
