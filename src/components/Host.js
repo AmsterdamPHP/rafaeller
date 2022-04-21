@@ -8,6 +8,7 @@ import Banner from "./Banner";
 import HostInstruction from "./HostInstruction";
 import PickingWinner from "./PickingWinner";
 import Winner from "./Winner";
+import {QRCodeCanvas} from "qrcode.react"
 
 const Host = (props) => {
   const {ws, connected} = props
@@ -52,10 +53,18 @@ const Host = (props) => {
     setPlayers(filtered)
   }
 
+  const rafflerUrl = 'rafaeller.herokuapp.com'
+
   return (
     <React.Fragment>
       {connected && players.length > 1 && !pickingWinner &&
         <HostInstruction winnerPicked={winner !== false} />
+      }
+      {
+        connected && joinCode &&
+          <div className="qr">
+            <QRCodeCanvas size={180} value={`http://${rafflerUrl}/join?code=${joinCode}`} includeMargin />
+          </div>
       }
       <header className="App-header">
         { connected && !joinCode
@@ -67,11 +76,10 @@ const Host = (props) => {
           />
           : connected
             ? <JoinCode
-              url={`${process.env.PUBLIC_URL}/join`}
+              url={`${rafflerUrl}/join`}
               code={joinCode}
             />
             : <Loading message="not connected to raffle server..." />
-
         }
         { !pickingWinner ?
             !winner

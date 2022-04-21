@@ -1,8 +1,12 @@
 import PropTypes from "prop-types"
+import React from "react"
 
 export default function JoinCode(props) {
   return (
-    <p>Go to {props.url} and enter <strong>{props.code}</strong> to join!</p>
+    <p>
+      Go to <strong>{props.url}</strong> and enter <strong>{props.code}</strong> to join!<br />
+      <span className="small">(or scan the QR code)</span>
+    </p>
   )
 }
 

@@ -74,8 +74,19 @@ form input.blackUnderlined {
   font-style: italic;
 }
 
+.small {
+  font-size: calc(10px + 1vmin);
+}
+
 form input.blackUnderlined:focus {
   outline: none;
+}
+
+.qr {
+  position:absolute;
+  top: 20px;
+  right:20px;
+  z-index:100
 }
 
 form button {
