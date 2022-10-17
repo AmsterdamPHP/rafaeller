@@ -1,0 +1,74 @@
+name: Deploy
+
+on: 
+  push:
+    branches:
+      - main
+    
+jobs:
+  deployment:
+
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+    - name: Get current time for Folder
+      uses: josStorer/get-current-time@v2.0.2
+      id: current-time
+      with:
+        format: YYYYMMDDHHMMSS
+    - name: Get current time for Cleanup
+      uses: josStorer/get-current-time@v2.0.2
+      id: current-time-cleanup
+      with:
+        format: YYYYMM
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 12
+    - run: npm ci
+    - name: Build App
+      run: npm run build
+      env: 
+        CI: false
+        REACT_APP_RAFFLER_SERVER: 'wss://raffle-server.amsterdamphp.nl'
+        REACT_APP_RAFFLER_CLIENT_URL: 'raffles.amsterdamphp.nl'
+        PUBLIC_URL: "/"
+    - name: Copy Server Files to upload
+      run: cp -Rf ./server ./build/
+    - name: Publish to Server
+      uses: easingthemes/ssh-deploy@main
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_DEPLOY_PRIVATE_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "./build/"
+          REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
+          REMOTE_USER: ${{ secrets.DEPLOY_USER }}
+          TARGET: ${{ secrets.DEPLOY_RELEASES_FOLDER }}/${{ steps.current-time.outputs.formattedTime }}
+    - name: Deploy on Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        key: ${{ secrets.SSH_DEPLOY_PRIVATE_KEY }}
+        username: ${{ secrets.DEPLOY_USER }}
+        script: |
+          rm -Rf ${{ secrets.DEPLOY_CURRENT_PATH }}
+          ln -sf ${{ secrets.DEPLOY_RELEASES_FOLDER }}/${{ steps.current-time.outputs.formattedTime }} ${{ secrets.DEPLOY_CURRENT_PATH }}
+    - name: Validate Host Conf
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        key: ${{ secrets.SSH_DEPLOY_PRIVATE_KEY }}
+        username: ${{ secrets.DEPLOY_USER }}
+        script: |
+          rm -Rf /etc/nginx/sites-enabled/raffle-client
+          ln -sf ${{ secrets.DEPLOY_CURRENT_PATH }}/server/raffle-client.nginx /etc/nginx/sites-enabled/raffle-client 
+          service nginx reload
+    - name: Server Cleanup
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        key: ${{ secrets.SSH_DEPLOY_PRIVATE_KEY }}
+        username: ${{ secrets.DEPLOY_USER }}
+        script: |
+          cd ${{ secrets.DEPLOY_RELEASES_FOLDER }}
+          find . -maxdepth 1 -mindepth 1 -type d -a ! -regex '.*${{ steps.current-time-cleanup.outputs.formattedTime }}.*' -exec rm -Rf {} \+
