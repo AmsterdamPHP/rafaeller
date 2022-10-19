@@ -1,4 +1,4 @@
-const wsUrl = 'wss://raffle-server.herokuapp.com'
+const wsUrl = process.env.REACT_APP_RAFFLER_SERVER;
 const connect = () => {
   return new WebSocket(wsUrl)
 }

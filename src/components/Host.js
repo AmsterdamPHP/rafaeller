@@ -53,7 +53,7 @@ const Host = (props) => {
     setPlayers(filtered)
   }
 
-  const rafflerUrl = 'rafaeller.herokuapp.com'
+  const rafflerUrl = process.env.REACT_APP_RAFFLER_CLIENT_URL
 
   return (
     <React.Fragment>
